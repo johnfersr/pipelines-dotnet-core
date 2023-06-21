@@ -7,20 +7,11 @@ pool:
   vmImage: ubuntu-latest
 
 schedules:
-- cron: '0 0 * * *'
+- cron: '0 */1 * * *'
   displayName: Daily midnight build
   branches:
     include:
-    - main
-    - releases/*
-    exclude:
-    - releases/ancient/*
-- cron: '0 12 * * 0'
-  displayName: Weekly Sunday build
-  branches:
-    include:
-    - releases/*
-  always: true
+    - master
 
 stages:
 - stage: Build
