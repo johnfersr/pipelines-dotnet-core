@@ -35,11 +35,13 @@ stages:
       displayName: 'Build'
     - powershell: Write-Host "Run unit tests for your application."        
       displayName: 'Unit Testing'
-    - task: PublishPipelineArtifact@0
-      displayName: Publish Artifacts
+    
+    - powershell: gci env:* | sort-object name | Format-Table -AutoSize | Out-File $env:BUILD_ARTIFACTSTAGINGDIRECTORY/environment-variables.txt
+
+    - task: PublishBuildArtifacts@1
       inputs:
-        artifactName: drop
-        targetPath: '$(Build.SourcesDirectory)'
+        pathToPublish: '$(Build.ArtifactStagingDirectory)'
+        artifactName: drop   
     
     - task: NodeTool@0
       displayName: Node install
